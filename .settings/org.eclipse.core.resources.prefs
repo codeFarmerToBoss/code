@@ -2,5 +2,5 @@ eclipse.preferences.version=1
 encoding//src/db_config.properties=UTF-8
 encoding//src/log4j.properties=UTF-8
 encoding//src/validationMessage.properties=UTF-8
-encoding//src/validationMessage_CN.properties=UTF-8
-encoding//src/validationMessage_EN.properties=UTF-8
+encoding//src/validationMessage_cn.properties=UTF-8
+encoding//src/validationMessage_enproperties=UTF-8
