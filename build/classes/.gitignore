@@ -1,0 +1,10 @@
+/application-mvc.xml
+/applicationContext.xml
+/com/
+/db_config.properties
+/log4j.properties
+/mybatis-config.xml
+/test/
+/validationMessage.properties
+/validationMessage_CN.properties
+/validationMessage_EN.properties

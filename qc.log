@@ -1,0 +1,16 @@
+2018-06-19 20:05:39,217-[TS] INFO main root - 准备初始化mybatis环境
+   2018-06-19 20:14:35,578-[TS] INFO main root - 准备初始化mybatis环境
+   2018-06-19 20:17:06,234-[TS] INFO main root - 准备初始化mybatis环境
+   2018-06-19 20:18:27,328-[TS] INFO main root - 准备初始化mybatis环境
+   2018-06-19 20:22:09,104-[TS] INFO main root - 准备初始化mybatis环境
+   2018-06-19 20:23:47,952-[TS] INFO main root - 准备初始化mybatis环境
+   2018-06-19 20:24:19,143-[TS] INFO main root - 准备初始化mybatis环境
+   2018-06-19 20:26:54,545-[TS] INFO main root - 准备初始化mybatis环境
+   2018-06-19 20:30:32,050-[TS] INFO main org.springframework.context.support.ClassPathXmlApplicationContext - Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@35851384: startup date [Tue Jun 19 20:30:32 CST 2018]; root of context hierarchy
+   2018-06-19 20:30:32,133-[TS] INFO main org.springframework.beans.factory.xml.XmlBeanDefinitionReader - Loading XML bean definitions from class path resource [applicationContext.xml]
+   2018-06-19 20:30:32,511-[TS] INFO main org.springframework.context.support.PropertySourcesPlaceholderConfigurer - Loading properties file from class path resource [db_config.properties]
+   2018-06-19 20:30:33,436-[TS] INFO main test.TestBookService - 上一页：1下一页：1总页数：1
+   2018-06-19 20:30:33,447-[TS] INFO main test.TestBookService - book [isbn=ISBN-123464-21, bookName=大英1, price=25.0, publishDate=Thu Jun 07 20:06:10 CST 2018, publisher=岭南师范学院出版社, category=Category [id=2, name=英语, books=null]]
+   2018-06-19 20:30:33,447-[TS] INFO main test.TestBookService - book [isbn=ISBN-123464-22, bookName=大英2, price=25.0, publishDate=Thu Jun 07 20:06:10 CST 2018, publisher=岭南师范学院出版社, category=Category [id=2, name=英语, books=null]]
+   2018-06-19 20:30:33,448-[TS] INFO main test.TestBookService - book [isbn=ISBN-123464-23, bookName=大英3, price=25.0, publishDate=Thu Jun 07 20:06:10 CST 2018, publisher=岭南师范学院出版社, category=Category [id=2, name=英语, books=null]]
+   

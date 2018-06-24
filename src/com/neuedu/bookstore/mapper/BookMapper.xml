@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- namespace用于配置映射的数据操作接口，内容是接口的名称 -->
+  <mapper namespace="com.neuedu.bookstore.mapper.BookMapper">
+  
+  <resultMap type="Book" id="bookMap">
+  <result column="isbn" property="isbn"/>
+	  	<result column="book_name" property="bookName"/>
+	  	<result column="price" property="price"/>
+	  	<result column="publish_date" property="publishDate"/>
+	  	<result column="book_image" property="bookImage"/>
+	  	<result column="publisher" property="publisher"/>
+	  	
+	  	<!-- <result column="category_id" property="category.id"/> -->
+	  	<association property="category" column="category_id" 
+	  					javaType="Category" select="selectCategoryBook">
+	  	</association>
+  </resultMap>
+  <select id="selectCategoryBook" parameterType="int" resultType="Category">
+  select id,name from category where id = #{categoryId}
+  </select>
+  
+  <select id="findAll" resultMap="bookMap">
+  select * from book
+  </select>
+  
+  <resultMap type="Book" id="bookMap2">
+  		<id column="isbn" property="isbn"/>
+  		<result column="book_name" property="bookName"/>
+	  	<result column="price" property="price"/>
+	  	<result column="publish_date" property="publishDate"/>
+	  	<result column="publisher" property="publisher"/>
+	  	<result column="book_image" property="bookImage"/>
+	  	<!-- <result column="category_id" property="category.id"/> -->
+	  	<association property="category" column="category_id" 
+	  					javaType="Category" select="selectCategoryBook">
+	  	</association>
+  </resultMap>
+  
+  <select id="findAllWithCategory" resultMap="bookMap2">
+  select * from book b,category c where b.category_id = c.id
+  </select>
+  
+  
+  <select id="findBookByIsbn" parameterType="String" resultMap="bookMap2">
+  select * from book where isbn = #{id}
+  </select>
+  
+  <!-- 使用公共sql -->
+  <sql id="selectbook">
+  select * from book
+  </sql>
+  
+  <!-- 不定条件查询（多条件查询的常用法） -->
+  <select id="findByExample" parameterType="Book" resultMap="bookMap">
+  select * from book b,category c where b.category_id = c.id
+  <if test="bookName != null">
+  and b.book_name like concat(concat("%",#{bookName}),"%")
+  </if>
+  <if test="isbn != null">
+  and b.isbn like concat(concat("%",#{isbn}),"%")
+  </if>
+  </select>
+  
+  <delete id="deleteBook" parameterType="String">
+  	delete from book where isbn = #{isbn}
+  	</delete>
+  
+  <update id="editBook" parameterType="Book">
+  	update book
+  	<set>
+  		book_name=#{bookName},price=#{price},publish_date=#{publishDate},publisher=#{publisher}
+  		<where>
+  		isbn=#{isbn}
+  		</where>
+  	</set>
+  </update>
+  
+  <select id="findBookByPager" parameterType="Pager" resultMap="bookMap">
+  <!-- 查询第一页数据，每页查询5条 -->
+  select * from book 
+  <where>
+		  <if test="param !=null and param.bookName !=null">
+		  book_name like concat(concat("%",#{param.bookName}),"%")
+		  </if>
+		  
+		  <!-- 查询条件中的小于号或者大于号可以使用转义符号进行编写：小于 （&lt;） ； 大于 （&gt;） 
+		  		或者使用cdata标号进行标志
+		   -->
+		  <if test="param !=null and param.price !=0.0">
+		  price &lt;= param.price
+			<!--   <![CDATA[price &lt;= param.price]]> -->
+			<!--   price<![CDATA[<]]>= param.price -->
+		  </if>
+	  </where>
+	  limit #{startIndex},#{pageSize}
+  </select>
+  
+  <select id="countForPager" parameterType="Pager" resultType="int">
+	  select count(isbn) from book
+	  <where>
+		  <if test="param !=null and param.bookName !=null">
+		  book_name like concat(concat("%",#{param.bookName}),"%")
+		  </if>
+		  
+		  <!-- 查询条件中的小于号或者大于号可以使用转义符号进行编写：小于 （&lt;） ； 大于 （&gt;） 
+		  		或者使用cdata标号进行标志
+		   -->
+		  <if test="param !=null and param.price !=0.0">
+		  price &lt;= param.price
+			<!--   <![CDATA[price &lt;= param.price]]> -->
+			<!--   price<![CDATA[<]]>= param.price -->
+		  </if>
+	  </where>
+  </select>
+   <insert id="addBook" parameterType="Book">
+        insert into book
+        values(#{isbn},#{bookName},#{price},#{bookImage},#{publishDate},#{publisher},#{category.id})
+    </insert>
+  </mapper>

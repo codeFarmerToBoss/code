@@ -1,0 +1,54 @@
+*{
+	padding:0px;
+	margin:0px;
+}
+
+h2{
+	margin: 10px;
+}
+
+.box1{
+	margin:20px auto;
+	width:750px;
+	height: 500px;
+}
+
+h6{
+	float:right;
+	position:relative;
+	top:-10px;
+}
+
+table{
+	float:right;
+	width: 750px;
+}
+
+p{
+	text-align:center;
+	clear:both;
+	marign-top:10px;
+	position:relative;
+	top:10px;
+}
+
+h6 a{
+	text-decoration: none;
+	color:#000;
+	font-size: 14px;
+}
+
+h6 button{
+	width:80px;
+}
+
+.inp1{
+	width:200px;
+	height:20px;
+	color:#bbb;
+}
+
+.inp2{
+	width:50px;
+	height:25px;
+}

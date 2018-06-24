@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<!-- 
+  	  配置全局文件时，需要按照以下先后顺序进行配置
+    (properties?,settings?,typeAliases?,typeHandlers?,
+      objectFactory?,objectWrapperFactory?,reflectorFactory?,
+      plugins?,environments?,databaseIdProvider?,mappers?) 
+      -->
+     <!-- 对于系统的某些信息， -->
+ <!--     <properties resource="db_config.properties">
+     <property name="driver" value="com.mysql.jdbc.Driver"/>
+     <property name="url" value="jdbc:mysql://localhost:3306/ssmdb"/>
+     <property name="username" value="root"/>
+     <property name="password" value="123456"/>
+     </properties> -->
+      
+  <!-- 使用别名优化mybatis配置 -->
+  <typeAliases>
+  <package name="com.neuedu.bookstore.bean"/>
+  <!-- <typeAlias type="com.neuedu.bookstore.bean.Book" alias="Book"/>
+  <typeAlias type="com.neuedu.bookstore.bean.Category" alias="Category"/> -->
+  </typeAliases>
+  
+	<!-- mybatis运行环境 -->
+  <!-- <environments default="development">
+    <environment id="development">
+    配置jdbc进行实物管理
+      <transactionManager type="JDBC"/>
+      配置数据源（连接池
+      <dataSource type="POOLED">
+        <property name="driver" value="${driver}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${username}"/>
+        <property name="password" value="${password}"/>
+      </dataSource>
+    </environment>
+  </environments> -->
+  
+
+  
+  <!-- 用于配置接口映射文件 -->
+  <mappers>
+  
+  <!-- 使用package简化Mapper映射配置 -->
+  <package name="com.neuedu.bookstore.mapper"/>
+    <!-- <mapper resource="com/neuedu/bookstore/mapper/CategoryMapper.xml"/> -->
+    <!-- <mapper resource="com/neuedu/bookstore/mapper/BookMapper.xml"/> -->
+    <!-- 当Mapper映射接口与配置名称一致时，可以使用接口类型进行映射 -->
+    <!-- <mapper class="com.neuedu.bookstore.mapper.BookMapper"/> -->
+    <!-- 可以使用file文件访问协议，读取文件系统的指定文件 
+    	在服务器环境中，多套程序可以使用系统文件进行统一配置
+    -->
+    <!-- <mapper url="file:///D:/lsworkspace/Bookstore/src/com/neuedu/bookstore/mapper/BookMapper.xml"/> -->
+    
+  </mappers>
+</configuration>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- namespace用于配置映射的数据操作接口，内容是接口的名称 -->
+  <mapper namespace="com.neuedu.bookstore.mapper.CategoryMapper">
+  	<!-- 接口映射文件用于配置接口的方法 -->
+  	<!-- 
+  	1、使用insert对应sql的insert语句，update对应update语句，delete对应delete语句，select对应select语句 
+  	2、使用标签的id属性配置接口方法的名称;
+  	使用parameterType配置方法参数的类型
+  	-->
+  	<insert id="addCategory" parameterType="Category">
+  	insert into category(name) values(#{name})
+  	</insert>
+  	
+  	<select id="findAllCategory" resultType="Category">
+  	<!-- 查询语句如果数据库表的列明与类的属性名相同，直接用列名进行查询，如果不同时，需要使用别名，别名与属性名相同 -->
+  	select * from category
+  	</select>
+  	
+  	<delete id="deleteById" parameterType="int">
+  	delete from category where id = #{id}
+  	</delete>
+  	
+  	<update id="editCategory" parameterType="Category">
+  	update category set name = #{name} WHERE id = #{id}
+  	</update>
+  	
+  	<select id="searchByName" resultType="Category">
+  	<!-- 
+  	方法一：直接获取参数的名称作为查询的条件，此时是一个精确查询；Java代码传参时需要对参数进行构造，在参数两端加上百分号%
+  	Category category = new Category(0, "%计算%");
+  	select * from category where name like #{name} 
+  	方法二：编写sql时，在查询条件两端加上百分号
+  	Category category = new Category(0, "计算");
+  	select * from category where name like "%"#{name}"%"
+  	方法三：编写sql时，在查询条件两端使用concat单行函数加上百分号
+  	select * from category where name like concat(concat("%",#{name}),"%")
+  	方法四：编写sql时，在查询条件两端使用bind标签加上百分号
+  	select * from category where name 
+  	<bind name="pattern" value="'%'+name+'%'"/>
+                like #{pattern} 
+  	 -->
+  	select * from category where name like #{name}
+  	</select>
+  	
+  	<!-- 对于复杂数据关系，mybatis可以支持自定义数据的关系映射 -->
+  	<resultMap id="categoryMap" type="Category">
+	  	<!-- 在自定义的关系映射中，可以通过配置每个查询结果与Java对象的映射关系 -->
+	  	<!-- id标签一般用于配置主键列或唯一键列 -->
+	  	<id column="id" property="id"/>
+	  	<result column="name" property="name"/>
+	  	<!-- 一对多关系可以使用collection进行配置 -->
+	  	<collection property="books" ofType="Book">
+	  		<result column="isbn" property="isbn"/>
+	  		<result column="book_name" property="bookName"/>
+	  		<result column="price" property="price"/>
+	  		<result column="publish_date" property="publishDate"/>
+	  		<result column="publisher" property="publisher"/>
+	  		<!-- 多对一 或 一对一 关系 -->
+	  		<result column="category_id" property="category.id"/>
+	  	</collection>
+  	</resultMap>
+  	<select id="findAllCategoryToBook" resultMap="categoryMap">
+  	 <!-- 查询语句如果数据库表的列明与类的属性名相同，直接用列名进行查询，如果不同时，需要使用别名，别名与属性名相同 -->
+  	 select c.id,c.name,b.isbn,b.book_name,b.price,b.publish_date,b.publisher,b.category_id
+  	 from category c left join book b on c.id = b.category_id
+  	</select>
+  	
+  	<resultMap id="categoryMap1" type="Category">
+	  	<!-- jdbcType配置列的数据类型，类型名在org.apache.ibatis.type.JdbcType类中查询-->
+	  	<!-- javaType是Java类型 -->
+	  	<id column="id" jdbcType="INTEGER" javaType="int" property="id"/>
+	  	<result column="name" property="name"/>
+	  	<!-- 集合数据第一次没有查询出来，需要执行二次查询（使用select进行配置） -->
+	  	<collection property="books" column="id" ofType="Book" 
+	  	select="selectBookByCategory">
+	  	</collection>
+  	</resultMap>
+  	<resultMap id="bookMap" type="Book">
+  	<result column="isbn" property="isbn"/>
+	  		<result column="book_name" property="bookName"/>
+	  		<result column="price" property="price"/>
+	  		<result column="publish_date" property="publishDate"/>
+	  		<result column="publisher" property="publisher"/>
+	  		<!-- 多对一 或 一对一 关系 -->
+	  		<result column="category_id" property="category.id"/>
+  	</resultMap>
+  	<select id="selectBookByCategory" parameterType="int" resultMap="bookMap">
+  	select * from book where category_id = #{id}
+  	</select>
+  	<select id="findAll" resultMap="categoryMap1">
+  	 <!-- 查询语句如果数据库表的列明与类的属性名相同，直接用列名进行查询，如果不同时，需要使用别名，别名与属性名相同 -->
+  	 select id,name from category
+  	</select>
+  	
+  </mapper>
